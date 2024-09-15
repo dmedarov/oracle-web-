@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Modern Index Page</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f9fc;
+            color: #333;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+        header {
+            background: linear-gradient(135deg, #0056b3, #003b8e);
+            padding: 50px 20px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        header p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+        nav {
+            background-color: #003b8e;
+            padding: 15px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul li {
+            margin: 0 20px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 10px;
+            position: relative;
+        }
+        nav ul li a::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 3px;
+            background-color: #ffcd39;
+            transition: width 0.3s ease;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        section h2 {
+            font-size: 2.5rem;
+            color: #003b8e;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease-in-out;
+        }
+        section p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+            animation: fadeInUp 1.2s ease-in-out;
+        }
+        section button {
+            margin-top: 40px;
+            padding: 10px 25px;
+            font-size: 1rem;
+            background-color: #ffcd39;
+            color: #003b8e;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        section button:hover {
+            background-color: #ffc107;
+        }
+        footer {
+            background-color: #003b8e;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 80px;
+            box-shadow: 0px -3px 6px rgba(0, 0, 0, 0.1);
+        }
+        footer p {
+            font-size: 0.9rem;
+        }
+        footer a {
+            color: #ffcd39;
+            text-decoration: none;
+            margin-left: 5px;
+            transition: color 0.3s ease;
+        }
+        footer a:hover {
+            color: #ffc107;
+        }
+        /* Keyframe Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            nav ul li {
+                margin: 0 10px;
+            }
+            section h2 {
+                font-size: 2rem;
+            }
+            section p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Discover the New Design</h1>
+    <p>Modern, responsive, and interactive web experience</p>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Portfolio</a></li>
+        <li><a href="#">Contact</a></li>
+    </ul>
+</nav>
+
+<section>
+    <h2>Welcome to a Fresh Look</h2>
+    <p>
+        This design exemplifies a clean and modern web layout, crafted for easy navigation, readability, and a pleasing user experience. Responsive across all devices, this page adjusts beautifully whether you're on a phone, tablet, or desktop.
+    </p>
+    <button>Learn More</button>
+</section>
+
+<footer>
+    <p>&copy; 2024 Your Company | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+</footer>
+
+</body>
+</html>
