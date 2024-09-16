@@ -45,3 +45,17 @@ jobs:
      -
        name: Image digest
        run: echo ${{ steps.docker_build.outputs.digest }}
+
+
+     -
+        name: Push Docker Image via SSH
+        uses: open-fringecore/docker-ssh-push@v0.1-beta
+        with:
+            images: |
+                 dmedarov/webserver:latest
+            ssh-host: ${{ secrets.SSH_HOST }}
+            ssh-user: ${{ secrets.SSH_USER }}
+            ssh-private-key: ${{ secrets.ORACLE_SSH_PRIVATE_KEY }}
+            ssh-remote-public-key: ${{ secrets.ORACLE_SSH_PUBLIC_KEY }}
+            # Optional inputs can be added as needed
+
