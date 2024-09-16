@@ -4,17 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Modern1 & Responsive Index Page</title>
+    <title>Advanced & Dynamic Web Experience</title>
     <style>
-        /* CSS Variables for easy theming */
+        /* CSS Variables for easier theming */
         :root {
             --primary-color: #003b8e;
             --secondary-color: #ffcd39;
             --background-color: #f7f9fc;
+            --dark-background: #1e1e1e;
+            --dark-text: #ddd;
+            --dark-primary: #0096ff;
+            --dark-secondary: #ffb347;
             --text-color: #333;
             --white-color: #ffffff;
+            --transition-speed: 0.3s;
         }
 
+        /* Global Reset */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -27,6 +33,13 @@
             background-color: var(--background-color);
             color: var(--text-color);
             line-height: 1.7;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            background-color: var(--dark-background);
+            color: var(--dark-text);
         }
 
         header {
@@ -35,6 +48,11 @@
             text-align: center;
             color: var(--white-color);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: background var(--transition-speed);
+        }
+
+        body.dark-mode header {
+            background: linear-gradient(135deg, var(--dark-primary), #00163c);
         }
 
         header h1 {
@@ -58,6 +76,11 @@
             width: 100%;
             z-index: 1000;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color var(--transition-speed);
+        }
+
+        body.dark-mode nav {
+            background-color: var(--dark-primary);
         }
 
         nav ul {
@@ -76,11 +99,15 @@
             font-size: 1.1rem;
             padding: 10px;
             position: relative;
-            transition: color 0.3s ease;
+            transition: color var(--transition-speed);
         }
 
         nav ul li a:hover {
             color: var(--secondary-color);
+        }
+
+        body.dark-mode nav ul li a:hover {
+            color: var(--dark-secondary);
         }
 
         nav ul li a::after {
@@ -99,6 +126,10 @@
             width: 100%;
         }
 
+        body.dark-mode nav ul li a::after {
+            background-color: var(--dark-secondary);
+        }
+
         section {
             padding: 100px 20px;
             max-width: 1200px;
@@ -111,6 +142,11 @@
             color: var(--primary-color);
             margin-bottom: 20px;
             animation: fadeInUp 1s ease-in-out;
+            transition: color var(--transition-speed);
+        }
+
+        body.dark-mode section h2 {
+            color: var(--dark-primary);
         }
 
         section p {
@@ -119,6 +155,11 @@
             margin: 0 auto;
             line-height: 1.8;
             animation: fadeInUp 1.2s ease-in-out;
+            transition: color var(--transition-speed);
+        }
+
+        body.dark-mode section p {
+            color: var(--dark-text);
         }
 
         section button {
@@ -138,10 +179,20 @@
             transform: translateY(-3px);
         }
 
+        body.dark-mode section button {
+            background-color: var(--dark-secondary);
+            color: var(--dark-primary);
+        }
+
+        body.dark-mode section button:hover {
+            background-color: #ffa31a;
+        }
+
+        /* Feature Section */
         .features {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
             margin-top: 50px;
         }
 
@@ -150,10 +201,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             padding: 30px;
-            margin: 15px;
-            width: 30%;
-            max-width: 350px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background var(--transition-speed), color var(--transition-speed);
         }
 
         .feature-box:hover {
@@ -173,6 +221,15 @@
             color: #555;
         }
 
+        body.dark-mode .feature-box {
+            background: var(--dark-background);
+            color: var(--dark-text);
+        }
+
+        body.dark-mode .feature-box h3 {
+            color: var(--dark-primary);
+        }
+
         footer {
             background-color: var(--primary-color);
             color: var(--white-color);
@@ -180,6 +237,11 @@
             padding: 20px;
             margin-top: 80px;
             box-shadow: 0px -3px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color var(--transition-speed);
+        }
+
+        body.dark-mode footer {
+            background-color: var(--dark-primary);
         }
 
         footer p {
@@ -195,6 +257,42 @@
 
         footer a:hover {
             color: #ffc107;
+        }
+
+        body.dark-mode footer a {
+            color: var(--dark-secondary);
+        }
+
+        body.dark-mode footer a:hover {
+            color: #ffa31a;
+        }
+
+        /* Toggle Dark Mode Button */
+        .toggle-dark-mode {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        body.dark-mode .toggle-dark-mode {
+            background-color: var(--dark-primary);
+        }
+
+        .toggle-dark-mode:hover {
+            background-color: #004085;
+        }
+
+        body.dark-mode .toggle-dark-mode:hover {
+            background-color: #0069d9;
         }
 
         /* Keyframe Animations */
@@ -236,15 +334,6 @@
 
             section p {
                 font-size: 1rem;
-            }
-
-            .features {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .feature-box {
-                width: 90%;
             }
         }
     </style>
@@ -292,6 +381,15 @@
 <footer>
     <p>&copy; 2024 Your Company | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
 </footer>
+
+<!-- Dark Mode Toggle Button -->
+<button class="toggle-dark-mode" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+
+<script>
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+    }
+</script>
 
 </body>
 </html>
