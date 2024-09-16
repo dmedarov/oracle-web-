@@ -4,83 +4,115 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>odern Index Page</title>
+    <title>Modern & Responsive Index Page</title>
     <style>
+        /* CSS Variables for easy theming */
+        :root {
+            --primary-color: #003b8e;
+            --secondary-color: #ffcd39;
+            --background-color: #f7f9fc;
+            --text-color: #333;
+            --white-color: #ffffff;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-        }
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f7f9fc;
-            color: #333;
-            line-height: 1.6;
             scroll-behavior: smooth;
         }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+
         header {
-            background: linear-gradient(135deg, #0056b3, #003b8e);
-            padding: 50px 20px;
+            background: linear-gradient(135deg, var(--primary-color), #00296b);
+            padding: 80px 20px;
             text-align: center;
-            color: white;
+            color: var(--white-color);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
+
         header h1 {
             font-size: 3rem;
             font-weight: 700;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            animation: fadeInDown 1s ease-in-out;
         }
+
         header p {
-            font-size: 1.2rem;
-            margin-top: 10px;
+            font-size: 1.3rem;
+            margin-top: 20px;
+            opacity: 0.8;
         }
+
         nav {
-            background-color: #003b8e;
-            padding: 15px;
+            background-color: var(--primary-color);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
+
         nav ul {
             list-style: none;
             display: flex;
             justify-content: center;
         }
+
         nav ul li {
             margin: 0 20px;
         }
+
         nav ul li a {
-            color: white;
+            color: var(--white-color);
             text-decoration: none;
             font-size: 1.1rem;
             padding: 10px;
             position: relative;
+            transition: color 0.3s ease;
         }
+
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+
         nav ul li a::after {
             content: '';
             display: block;
             width: 0;
             height: 3px;
-            background-color: #ffcd39;
+            background-color: var(--secondary-color);
             transition: width 0.3s ease;
             position: absolute;
             bottom: 0;
             left: 0;
         }
+
         nav ul li a:hover::after {
             width: 100%;
         }
+
         section {
-            padding: 80px 20px;
+            padding: 100px 20px;
             max-width: 1200px;
             margin: 0 auto;
             text-align: center;
         }
+
         section h2 {
             font-size: 2.5rem;
-            color: #003b8e;
+            color: var(--primary-color);
             margin-bottom: 20px;
             animation: fadeInUp 1s ease-in-out;
         }
+
         section p {
             font-size: 1.2rem;
             max-width: 800px;
@@ -88,40 +120,83 @@
             line-height: 1.8;
             animation: fadeInUp 1.2s ease-in-out;
         }
+
         section button {
             margin-top: 40px;
-            padding: 10px 25px;
-            font-size: 1rem;
-            background-color: #ffcd39;
-            color: #003b8e;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
             border: none;
-            border-radius: 5px;
+            border-radius: 50px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
+
         section button:hover {
             background-color: #ffc107;
+            transform: translateY(-3px);
         }
+
+        .features {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 50px;
+        }
+
+        .feature-box {
+            background: var(--white-color);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin: 15px;
+            width: 30%;
+            max-width: 350px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-box h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        .feature-box p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #555;
+        }
+
         footer {
-            background-color: #003b8e;
-            color: white;
+            background-color: var(--primary-color);
+            color: var(--white-color);
             text-align: center;
             padding: 20px;
             margin-top: 80px;
             box-shadow: 0px -3px 6px rgba(0, 0, 0, 0.1);
         }
+
         footer p {
             font-size: 0.9rem;
         }
+
         footer a {
-            color: #ffcd39;
+            color: var(--secondary-color);
             text-decoration: none;
             margin-left: 5px;
             transition: color 0.3s ease;
         }
+
         footer a:hover {
             color: #ffc107;
         }
+
         /* Keyframe Animations */
         @keyframes fadeInUp {
             from {
@@ -133,19 +208,43 @@
                 transform: translateY(0);
             }
         }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             header h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
+
             nav ul li {
                 margin: 0 10px;
             }
+
             section h2 {
                 font-size: 2rem;
             }
+
             section p {
                 font-size: 1rem;
+            }
+
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .feature-box {
+                width: 90%;
             }
         }
     </style>
@@ -153,26 +252,41 @@
 <body>
 
 <header>
-    <h1>Discover the New Design</h1>
-    <p>Modern, responsive, and interactive web experience</p>
+    <h1>Welcome to Your Next Web Experience</h1>
+    <p>Modern, Responsive, and Feature-Rich Design</p>
 </header>
 
 <nav>
     <ul>
         <li><a href="#">Home</a></li>
         <li><a href="#">About</a></li>
+        <li><a href="#">Features</a></li>
         <li><a href="#">Services</a></li>
-        <li><a href="#">Portfolio</a></li>
         <li><a href="#">Contact</a></li>
     </ul>
 </nav>
 
 <section>
-    <h2>Welcome to a Fresh Look</h2>
+    <h2>Embrace the Future of Web Design</h2>
     <p>
-        This design exemplifies a clean and modern web layout, crafted for easy navigation, readability, and a pleasing user experience. Responsive across all devices, this page adjusts beautifully whether you're on a phone, tablet, or desktop.
+        Discover a design that is not only visually stunning but also packed with modern features. This template provides an intuitive and engaging experience across all devices.
     </p>
-    <button>Learn More</button>
+    <button>Get Started</button>
+
+    <div class="features">
+        <div class="feature-box">
+            <h3>Fast Loading</h3>
+            <p>Optimized for performance, ensuring fast loading times on any device, keeping your visitors engaged.</p>
+        </div>
+        <div class="feature-box">
+            <h3>Responsive Design</h3>
+            <p>Looks perfect on any screen size. From desktop to mobile, this layout adapts seamlessly.</p>
+        </div>
+        <div class="feature-box">
+            <h3>Customizable</h3>
+            <p>Built with scalability in mind, this page is easy to customize to suit your needs and branding.</p>
+        </div>
+    </div>
 </section>
 
 <footer>
