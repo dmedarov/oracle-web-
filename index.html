@@ -4,19 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Advanced & Dynamic Web Experience</title>
+    <title>Green Themed Web Experience</title>
     <style>
-        /* CSS Variables for easier theming */
+        /* CSS Variables for theming */
         :root {
-            --primary-color: #003b8e;
-            --secondary-color: #ffcd39;
-            --background-color: #f7f9fc;
-            --dark-background: #1e1e1e;
-            --dark-text: #ddd;
-            --dark-primary: #0096ff;
-            --dark-secondary: #ffb347;
-            --text-color: #333;
+            --primary-color: #2d6a4f;
+            --secondary-color: #95d5b2;
+            --background-color: #f1faee;
+            --dark-background: #1b1b1b;
+            --dark-primary: #2d6a4f;
+            --dark-secondary: #52b788;
+            --text-color: #073b4c;
+            --dark-text: #e9edc9;
             --white-color: #ffffff;
+            --gray-color: #6c757d;
             --transition-speed: 0.3s;
         }
 
@@ -43,7 +44,7 @@
         }
 
         header {
-            background: linear-gradient(135deg, var(--primary-color), #00296b);
+            background: linear-gradient(135deg, var(--primary-color), #204f3b);
             padding: 80px 20px;
             text-align: center;
             color: var(--white-color);
@@ -52,7 +53,7 @@
         }
 
         body.dark-mode header {
-            background: linear-gradient(135deg, var(--dark-primary), #00163c);
+            background: linear-gradient(135deg, var(--dark-primary), #163026);
         }
 
         header h1 {
@@ -65,7 +66,7 @@
         header p {
             font-size: 1.3rem;
             margin-top: 20px;
-            opacity: 0.8;
+            opacity: 0.9;
         }
 
         nav {
@@ -175,7 +176,7 @@
         }
 
         section button:hover {
-            background-color: #ffc107;
+            background-color: #74c69d;
             transform: translateY(-3px);
         }
 
@@ -185,7 +186,7 @@
         }
 
         body.dark-mode section button:hover {
-            background-color: #ffa31a;
+            background-color: #3a8369;
         }
 
         /* Feature Section */
@@ -218,11 +219,11 @@
         .feature-box p {
             font-size: 1rem;
             line-height: 1.6;
-            color: #555;
+            color: var(--gray-color);
         }
 
         body.dark-mode .feature-box {
-            background: var(--dark-background);
+            background: #333;
             color: var(--dark-text);
         }
 
@@ -256,7 +257,7 @@
         }
 
         footer a:hover {
-            color: #ffc107;
+            color: #74c69d;
         }
 
         body.dark-mode footer a {
@@ -264,7 +265,7 @@
         }
 
         body.dark-mode footer a:hover {
-            color: #ffa31a;
+            color: #52b788;
         }
 
         /* Toggle Dark Mode Button */
@@ -288,11 +289,11 @@
         }
 
         .toggle-dark-mode:hover {
-            background-color: #004085;
+            background-color: #1f4e34;
         }
 
         body.dark-mode .toggle-dark-mode:hover {
-            background-color: #0069d9;
+            background-color: #265940;
         }
 
         /* Keyframe Animations */
@@ -318,10 +319,10 @@
             }
         }
 
-        /* Responsive Design */
+        /* Media Queries */
         @media (max-width: 768px) {
             header h1 {
-                font-size: 2.2rem;
+                font-size: 2.5rem;
             }
 
             nav ul li {
@@ -341,8 +342,8 @@
 <body>
 
 <header>
-    <h1>Welcome to Your Next Web Experience</h1>
-    <p>Modern, Responsive, and Feature-Rich Design</p>
+    <h1>Welcome to Your Green Web Experience</h1>
+    <p>Modern, Responsive, and Feature-Rich Design in Shades of Green</p>
 </header>
 
 <nav>
@@ -390,6 +391,10 @@
         document.body.classList.toggle('dark-mode');
     }
 </script>
+
+</body>
+</html>
+
 
 </body>
 </html>
