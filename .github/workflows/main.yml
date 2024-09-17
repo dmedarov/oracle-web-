@@ -57,7 +57,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.ORACLE_SSH_PRIVATE_KEY }}
           script: |
-            docker pull ${{ secrets.DOCKER_USERNAME }}/my-app:latest
+            docker pull ${{ secrets.DOCKER_USERNAME }}/webserver:latest
             docker stop my-app || true
             docker rm my-app || true
-            docker run -d --name my-app -p 80:8080 ${{ secrets.DOCKER_HUB_USERNAME }}/my-app:latest
+            docker run -d --name webserver -p 80:8080 ${{ secrets.DOCKER_USERNAME }}/webserver:latest
