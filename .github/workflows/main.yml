@@ -45,3 +45,19 @@ jobs:
      -
        name: Image digest
        run: echo ${{ steps.docker_build.outputs.digest }}
+ 
+ deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH to Server
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.ORACLE_IP }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.ORACLE_SSH_PRIVATE_KEY }}
+          script: |
+            docker pull ${{ secrets.DOCKER_USERNAME }}/my-app:latest
+            docker stop my-app || true
+            docker rm my-app || true
+            docker run -d --name my-app -p 80:8080 ${{ secrets.DOCKER_HUB_USERNAME }}/my-app:latest
