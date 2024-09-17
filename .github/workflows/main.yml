@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+rname: CI/CD Pipeline
 
 on:
   push:
@@ -57,7 +57,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.ORACLE_SSH_PRIVATE_KEY }}
           script: |
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/webserver:latest
+            sudo docker pull dmedarov/webserver:latest
             sudo docker stop webserver || true
             sudo docker rm webserver || true
-            sudo docker run -d --name webserver -p 80:80 ${{ secrets.DOCKER_USERNAME }}/webserver:latest
+            sudo docker run -d --name webserver -p 80:80 dmedarov/webserver:latest
