@@ -5,93 +5,159 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Tutorial on pushing and deploying Docker container using GitHub Actions, Docker Hub, and Rocky Linux."
+      content="Comprehensive guide to building, pushing, and deploying Docker containers using GitHub Actions, Docker Hub, SSH, and Rocky Linux with automated updates via Watchtower."
     />
     <title>
-      Pushing and Deploying Docker Container using GitHub Actions, Docker Hub,
-      and Rocky Linux
+      Automated Docker Deployment: GitHub Actions, Docker Hub, SSH, Rocky Linux
+      & Watchtower
     </title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
       body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
+        font-family: 'Roboto', sans-serif;
+        background-color: #f0f4f8;
         margin: 0;
         padding: 0;
-      }
-      .container {
-        max-width: 800px;
-        margin: 50px auto;
-        background: white;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      }
-      h1,
-      h2 {
+        line-height: 1.7;
         color: #333;
       }
-      pre {
-        background-color: #f4f4f4;
-        padding: 10px;
-        border-left: 4px solid #333;
-        overflow-x: auto;
-      }
-      code {
-        color: #d63384;
+      h1,
+      h2,
+      h3,
+      h4 {
+        color: #2c3e50;
       }
       a {
-        color: #007bff;
+        color: #3498db;
         text-decoration: none;
       }
       a:hover {
         text-decoration: underline;
       }
-      ul {
-        margin-left: 20px;
+      .container {
+        max-width: 1000px;
+        margin: 40px auto;
+        background: white;
+        padding: 40px 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+      .container h1 {
+        font-size: 36px;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .container p {
+        margin-bottom: 20px;
+        font-size: 18px;
+        line-height: 1.8;
+      }
+      .container ul {
+        list-style-type: disc;
+        padding-left: 40px;
+        margin-bottom: 30px;
+      }
+      pre,
+      code {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 16px;
+        color: #e74c3c;
+        background-color: #f7f7f7;
+        padding: 15px;
+        border-left: 6px solid #3498db;
+        border-radius: 5px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        overflow-x: auto;
+      }
+      .highlight {
+        background-color: #e8f5e9;
+        padding: 12px;
+        border-left: 6px solid #2ecc71;
+        border-radius: 5px;
+        font-size: 16px;
+        margin-bottom: 30px;
+      }
+      .warning {
+        background-color: #fff3cd;
+        padding: 12px;
+        border-left: 6px solid #f39c12;
+        border-radius: 5px;
+        margin-bottom: 30px;
       }
       .note {
-        background-color: #eaf7ea;
-        padding: 10px;
-        border-left: 4px solid #28a745;
-        margin-bottom: 20px;
+        background-color: #f0f4f8;
+        padding: 20px;
+        border-left: 6px solid #2980b9;
+        margin-bottom: 30px;
+        font-style: italic;
+      }
+      .btn-primary {
+        display: inline-block;
+        padding: 14px 28px;
+        background-color: #2980b9;
+        color: #fff;
+        text-align: center;
+        border-radius: 5px;
+        font-size: 18px;
+        transition: background-color 0.3s;
+      }
+      .btn-primary:hover {
+        background-color: #1b4f72;
+      }
+      @media (max-width: 768px) {
+        .container {
+          padding: 20px;
+        }
+        .container h1 {
+          font-size: 28px;
+        }
+        pre,
+        code {
+          font-size: 14px;
+        }
       }
     </style>
   </head>
   <body>
     <div class="container">
       <h1>
-        Pushing and Deploying Docker Container using GitHub Actions, Docker Hub,
-        and Rocky Linux
+        Automated Docker Deployment: GitHub Actions, Docker Hub, SSH, Rocky
+        Linux & Watchtower
       </h1>
 
       <p>
-        This tutorial will guide you through automating the process of building,
-        pushing, and deploying a Docker container using
-        <strong>GitHub Actions</strong>, <strong>Docker Hub</strong>, and
-        deploying it on your own <strong>Rocky Linux</strong> server.
+        This tutorial covers how to automatically build, push, and deploy Docker
+        containers using <strong>GitHub Actions</strong>,
+        <strong>Docker Hub</strong>, and <strong>SSH</strong> on a Rocky Linux
+        server. Additionally, we'll set up <strong>Watchtower</strong> to keep
+        your Docker container up-to-date.
       </p>
 
       <h2>Prerequisites</h2>
       <ul>
-        <li><strong>Rocky Linux server</strong> with SSH access.</li>
+        <li>A Rocky Linux server with SSH access.</li>
         <li>
-          <strong>Docker installed</strong> on both your local machine and the
-          Rocky Linux server.
-        </li>
-        <li><strong>GitHub repository</strong> for your code.</li>
-        <li>
-          <strong>Docker Hub account</strong> for storing your Docker images.
+          Docker installed on both your local machine and the Rocky Linux
+          server.
         </li>
         <li>
-          <strong>GitHub Secrets</strong> set up with your Docker Hub
-          credentials.
+          A GitHub repository with your code and a Docker Hub account for
+          storing images.
+        </li>
+        <li>
+          GitHub Secrets set up for Docker Hub credentials and SSH access to
+          your Rocky Linux server.
         </li>
       </ul>
 
-      <h2>Step 1: Set Up Docker on Your Rocky Linux Server</h2>
+      <h2 id="step-1">Step 1: Install Docker on Rocky Linux</h2>
       <p>
-        If Docker isn't installed on your Rocky Linux server, follow these
-        commands:
+        If Docker isn't installed on your Rocky Linux server, use the following
+        commands to install it:
       </p>
       <pre><code>sudo dnf update
 sudo dnf install -y dnf-plugins-core
@@ -102,20 +168,44 @@ sudo dnf install docker-ce docker-ce-cli containerd.io</code></pre>
       <pre><code>sudo systemctl start docker
 sudo systemctl enable docker</code></pre>
 
-      <p>Verify Docker is running:</p>
+      <p>Verify Docker installation:</p>
       <pre><code>docker --version</code></pre>
 
-      <h2>Step 2: Docker Hub - Create a Repository</h2>
+      <h2>Step 2: Setting Up SSH for Secure Access</h2>
       <p>
-        1. Log in to <a href="https://hub.docker.com/">Docker Hub</a>.<br />
-        2. Create a new repository to store your Docker image. Make it public or
-        private as needed.
+        To securely connect to your Rocky Linux server from GitHub Actions, you
+        need to set up SSH keys.
       </p>
 
-      <h2>Step 3: Create a Dockerfile</h2>
+      <h3>Generate SSH Key Pair</h3>
       <p>
-        Create a <code>Dockerfile</code> in your project directory. Here's a
-        simple example:
+        On your local machine, generate an SSH key pair (if you don't already
+        have one):
+      </p>
+      <pre><code>ssh-keygen -t rsa -b 4096 -C "your_email@example.com"</code></pre>
+
+      <p>After generating the key, add the public key to your server:</p>
+      <pre><code>ssh-copy-id your_user@your_server_ip</code></pre>
+
+      <p>
+        Or manually add the public key to the
+        <code>~/.ssh/authorized_keys</code> file on your server.
+      </p>
+
+      <h2>Step 3: Docker Hub Setup</h2>
+      <p>Create a repository on Docker Hub to store your Docker images:</p>
+      <ol>
+        <li>
+          Log in to
+          <a href="https://hub.docker.com/" target="_blank">Docker Hub</a>.
+        </li>
+        <li>Create a new repository for your Docker images.</li>
+      </ol>
+
+      <h2>Step 4: Create a Dockerfile</h2>
+      <p>
+        Your Dockerfile defines how to build your application container. Here’s
+        a simple example for a Node.js application:
       </p>
       <pre><code>FROM node:16
 WORKDIR /usr/src/app
@@ -125,18 +215,20 @@ COPY . .
 EXPOSE 8080
 CMD [ "node", "index.js" ]</code></pre>
 
-      <h2>
-        Step 4: GitHub Actions Workflow for Building and Pushing to Docker Hub
-      </h2>
-      <p>
-        Set up GitHub Actions to automate building and pushing the Docker image
-        to Docker Hub when changes are pushed to the main branch.
-      </p>
-      <p>
-        Create a directory <code>.github/workflows/</code> in your GitHub
-        repository, then create a file <code>docker-publish.yml</code>:
-      </p>
+      <p>Make sure the Dockerfile suits your application's requirements.</p>
 
+      <h2>Step 5: Automating Builds with GitHub Actions</h2>
+      <p>
+        We’ll now automate Docker image building and pushing to Docker Hub via
+        GitHub Actions:
+      </p>
+      <ol>
+        <li>
+          Create a <code>.github/workflows/docker-publish.yml</code> file in
+          your GitHub repository.
+        </li>
+        <li>Add the following content:</li>
+      </ol>
       <pre><code>name: Build and Push Docker Image
 
 on:
@@ -168,28 +260,14 @@ jobs:
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/my-app:latest</code></pre>
 
       <p>
-        Make sure you replace <code>my-app</code> with your Docker Hub
-        repository's name.
+        Replace <code>my-app</code> with the name of your Docker Hub repository.
       </p>
 
-      <h2>Step 5: Deploying on Rocky Linux Server with Docker</h2>
+      <h2>Step 6: Deploy to Rocky Linux via SSH</h2>
+      <h3>GitHub Actions Workflow</h3>
       <p>
-        Once the Docker image is pushed to Docker Hub, we can deploy it on the
-        Rocky Linux server.
-      </p>
-
-      <h3>Step 5.1: Set up SSH keys (if needed)</h3>
-      <p>Generate SSH keys to securely connect to your server:</p>
-      <pre><code>ssh-keygen -t rsa -b 4096 -C "your_email@example.com"</code></pre>
-      <p>
-        Add the public key to <code>~/.ssh/authorized_keys</code> on your
-        server.
-      </p>
-
-      <h3>Step 5.2: Create a GitHub Actions Deployment Workflow</h3>
-      <p>
-        Now, create a new GitHub Actions workflow to SSH into your Rocky Linux
-        server and pull the Docker image:
+        To automate deployment to your Rocky Linux server, create another
+        workflow <code>deploy.yml</code>:
       </p>
       <pre><code>name: Deploy to Rocky Linux
 
@@ -206,7 +284,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Deploy over SSH
+      - name: Deploy via SSH
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.ROCKY_LINUX_HOST }}
@@ -219,28 +297,53 @@ jobs:
             docker run -d --name my-app -p 80:8080 ${{ secrets.DOCKER_HUB_USERNAME }}/my-app:latest</code></pre>
 
       <p>
-        Replace the placeholders with your own values, and add the necessary
-        secrets in your GitHub repository.
+        Make sure you’ve set up the SSH private key, username, and host details
+        in your GitHub Secrets.
       </p>
 
-      <h2>Step 6: Testing the Pipeline</h2>
+      <h2>Step 7: Automating Updates with Watchtower</h2>
       <p>
-        Push your code changes to GitHub. The pipeline will trigger both
-        workflows to build, push, and deploy your Docker container
-        automatically.
+        <strong>Watchtower</strong> is a simple container that monitors your
+        running Docker containers and automatically updates them when new images
+        are available. To set up Watchtower:
+      </p>
+      <pre><code>docker run -d \
+  --name watchtower \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  containrrr/watchtower my-app \
+  --interval 30</code></pre>
+
+      <p>
+        This will check for updates every 30 seconds and update the container
+        automatically if a new image is available.
       </p>
 
-      <h2>Conclusion</h2>
+      <h2>Conclusion & Next Steps</h2>
       <p>
-        You've successfully automated the process of building, pushing, and
-        deploying a Docker container using <strong>GitHub Actions</strong>,
-        <strong>Docker Hub</strong>, and a <strong>Rocky Linux</strong> server!
+        You now have a fully automated pipeline that builds, pushes, deploys,
+        and keeps your Docker containers updated. To further enhance your setup,
+        consider integrating:
       </p>
+      <ul>
+        <li>Error handling and notifications for failed deployments.</li>
+        <li>
+          Docker Compose or Kubernetes for managing multi-container
+          environments.
+        </li>
+        <li>
+          Monitoring with Prometheus or Grafana to track your application’s
+          performance.
+        </li>
+      </ul>
 
       <div class="note">
-        <strong>Next Steps:</strong> Consider adding error handling and scaling
-        your deployment with Docker Compose or Kubernetes.
+        Congratulations! You've automated the lifecycle of your Docker
+        applications using GitHub Actions, Docker Hub, SSH, and Watchtower!
       </div>
+
+      <a href="https://hub.docker.com/" class="btn-primary"
+        >Get Started with Docker Hub</a
+      >
     </div>
   </body>
 </html>
