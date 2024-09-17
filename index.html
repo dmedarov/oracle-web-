@@ -4,101 +4,231 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Comprehensive guide to building, pushing, and deploying Docker containers using GitHub Actions, Docker Hub, SSH, Rocky Linux & Watchtower, with free server hosting from Oracle Cloud.">
-  <title>Automated Docker Deployment: GitHub Actions, Docker Hub, SSH, Rocky Linux, Watchtower & Oracle Cloud Free Server</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <title>Automated Docker Deployment with GitHub Actions, Docker Hub, and Oracle Cloud</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- CSS Styles -->
   <style>
-    /* ... previous styles remain the same ... */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1, h2 {
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+    }
+
+    p {
+      margin-bottom: 15px;
+      font-size: 1rem;
+    }
+
+    ul {
+      margin: 20px 0;
+      padding-left: 20px;
+    }
+
+    ul li {
+      margin-bottom: 10px;
+    }
+
+    a {
+      color: #3498db;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #3498db;
+      color: #fff;
+      border-radius: 5px;
+      text-align: center;
+      margin-top: 20px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: #2980b9;
+    }
+
+    pre {
+      background-color: #272822;
+      color: #f8f8f2;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+      font-size: 0.9rem;
+    }
+
+    code {
+      color: #e6db74;
+    }
+
+    .note {
+      background-color: #ecf0f1;
+      padding: 15px;
+      border-left: 4px solid #3498db;
+      margin: 20px 0;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      .container {
+        padding: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.75rem;
+      }
+
+      h2 {
+        font-size: 1.25rem;
+      }
+
+      .container {
+        padding: 10px;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Automated Docker Deployment: GitHub Actions, Docker Hub, SSH, Rocky Linux, Watchtower & Oracle Cloud Free Server</h1>
+    <h1>Automated Docker Deployment with GitHub Actions, Docker Hub, and Oracle Cloud</h1>
+    <p>In this guide, we'll walk you through the steps of building, pushing, and deploying Docker containers automatically using GitHub Actions, Docker Hub, and SSH on a Rocky Linux server. Additionally, we will cover how to obtain an <strong>Always Free VM</strong> from Oracle Cloud and how to use <strong>Watchtower</strong> to keep your Docker containers updated.</p>
 
-    <p>This tutorial covers how to automatically build, push, and deploy Docker containers using <strong>GitHub Actions</strong>, <strong>Docker Hub</strong>, and <strong>SSH</strong> on a Rocky Linux server. Additionally, we'll set up <strong>Watchtower</strong> to keep your Docker container up-to-date and explain how to get a free server from <strong>Oracle Cloud Always Free Tier</strong>.</p>
+    <div class="section">
+      <h2>Step 1: Obtain a Free Oracle Cloud Server (Always Free Tier)</h2>
+      <p>Oracle Cloud offers an <strong>Always Free Tier</strong> with two virtual machines, providing enough resources for small-scale applications.</p>
+      <ol>
+        <li>Go to the <a href="https://www.oracle.com/cloud/free/" target="_blank">Oracle Cloud Free Tier</a> page.</li>
+        <li>Click on <strong>Start for Free</strong> and fill in the required details to register.</li>
+        <li>Verify your email and provide a valid credit card (no charges unless you opt into paid services).</li>
+        <li>Log in to the Oracle Cloud dashboard after completing verification.</li>
+      </ol>
 
-    <h2>Prerequisites</h2>
-    <ul>
-      <li>A Rocky Linux or any Linux server with SSH access. (You can get one from Oracle Cloud for free, more details below)</li>
-      <li>Docker installed on both your local machine and the Linux server.</li>
-      <li>A GitHub repository with your code and a Docker Hub account for storing images.</li>
-      <li>GitHub Secrets set up for Docker Hub credentials and SSH access to your Linux server.</li>
-    </ul>
+      <p>After registering, follow these steps to create a free VM:</p>
+      <ol>
+        <li>Go to the <strong>Compute</strong> section.</li>
+        <li>Click <strong>Create Instance</strong> and choose an <strong>Always Free Eligible</strong> image such as <strong>Rocky Linux</strong> or <strong>Ubuntu</strong>.</li>
+        <li>Select the <strong>VM.Standard.E2.1.Micro</strong> shape for a free instance.</li>
+        <li>Launch the instance and note its public IP for SSH access.</li>
+      </ol>
+    </div>
 
-    <h2 id="step-1">Step 1: Obtain a Free Oracle Cloud Server (Always Free Tier)</h2>
-    <p>Oracle Cloud provides an <strong>Always Free Tier</strong>, which includes two virtual machines (VMs) with Linux options like Rocky Linux, Ubuntu, and more, along with several other resources.</p>
+    <div class="section">
+      <h2>Step 2: Set Up SSH on Oracle VM</h2>
+      <p>To access your Oracle VM securely, you’ll need to set up SSH keys. Follow these steps:</p>
+      <pre><code>ssh-keygen -t rsa -b 4096 -C "your_email@example.com"</code></pre>
+      <p>Copy your public SSH key to Oracle Cloud’s VM settings, and access your server using the following command:</p>
+      <pre><code>ssh opc@<oracle-vm-public-ip></code></pre>
+    </div>
 
-    <h3>Create an Oracle Cloud Account</h3>
-    <p>Follow these steps to sign up for Oracle Cloud and get your free VM instance:</p>
-    <ol>
-      <li>Go to the <a href="https://www.oracle.com/cloud/free/" target="_blank">Oracle Cloud Free Tier</a> page.</li>
-      <li>Click on <strong>Start for Free</strong> and fill in the registration details, including your email, password, and account details.</li>
-      <li>You will need to verify your account through email and provide a valid credit card. (Oracle will not charge you unless you opt into paid services).</li>
-      <li>Once verified, log in to the Oracle Cloud dashboard.</li>
-    </ol>
-
-    <h3>Create a Virtual Machine (VM) Instance</h3>
-    <p>Once you're in the Oracle Cloud dashboard, you can create your virtual machine by following these steps:</p>
-    <ol>
-      <li>Navigate to the <strong>Compute</strong> section in the dashboard.</li>
-      <li>Click on <strong>Create Instance</strong>.</li>
-      <li>In the configuration options, select <strong>Always Free Eligible</strong> resources and choose your preferred operating system. Rocky Linux, Oracle Linux, and Ubuntu are all good choices for Docker hosting.</li>
-      <li>Set up the instance shape to a <strong>VM.Standard.E2.1.Micro</strong>, which is free.</li>
-      <li>After completing the configuration, launch the instance.</li>
-      <li>Once the instance is running, you can access it via SSH using the public IP address provided.</li>
-    </ol>
-
-    <h3>Set Up SSH Access to Your Oracle VM</h3>
-    <p>After the VM instance is created, you will need to set up SSH access to manage and deploy applications on the server:</p>
-    <ol>
-      <li>Go to the VM details page in your Oracle Cloud dashboard.</li>
-      <li>Under the <strong>SSH Keys</strong> section, add your public SSH key.</li>
-      <li>To generate an SSH key pair, run the following command on your local machine:</li>
-    </ol>
-    <pre><code>ssh-keygen -t rsa -b 4096 -C "your_email@example.com"</code></pre>
-
-    <p>Copy the public key to the Oracle VM by either manually pasting it into the Oracle Cloud dashboard or using the <code>ssh-copy-id</code> command:</p>
-    <pre><code>ssh-copy-id opc@<oracle-vm-public-ip></code></pre>
-
-    <p>Now, you can securely connect to your Oracle Cloud VM via SSH:</p>
-    <pre><code>ssh opc@<oracle-vm-public-ip></code></pre>
-
-    <h2>Step 2: Install Docker on Oracle VM (or Rocky Linux Server)</h2>
-    <p>With your free Oracle Cloud server ready, follow these steps to install Docker:</p>
-    <pre><code>sudo dnf update
+    <div class="section">
+      <h2>Step 3: Install Docker on Oracle VM</h2>
+      <p>Next, install Docker on your Oracle Cloud VM or any other Linux server (e.g., Rocky Linux):</p>
+      <pre><code>sudo dnf update
 sudo dnf install -y dnf-plugins-core
 sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
 sudo dnf install docker-ce docker-ce-cli containerd.io</code></pre>
 
-    <p>Start Docker and enable it to start on boot:</p>
-    <pre><code>sudo systemctl start docker
+      <p>Start and enable Docker:</p>
+      <pre><code>sudo systemctl start docker
 sudo systemctl enable docker</code></pre>
-
-    <p>Verify Docker installation:</p>
-    <pre><code>docker --version</code></pre>
-
-    <h2>Step 3: Docker Hub Setup</h2>
-    <p>Create a repository on Docker Hub to store your Docker images:</p>
-    <ol>
-      <li>Log in to <a href="https://hub.docker.com/" target="_blank">Docker Hub</a>.</li>
-      <li>Create a new repository for your Docker images.</li>
-    </ol>
-
-    <!-- Rest of the steps follow from the previous content, focusing on GitHub Actions, Dockerfile creation, SSH integration, and Watchtower setup... -->
-
-    <h2>Next Steps</h2>
-    <p>You now have an Oracle Cloud Always Free server running Docker, automatically deploying your containers with GitHub Actions and Docker Hub. Consider enhancing your setup by:</p>
-    <ul>
-      <li>Adding monitoring tools like Prometheus or Grafana to track the performance of your containers.</li>
-      <li>Setting up notifications in your GitHub Actions workflow to alert you of failed builds or deployments.</li>
-      <li>Exploring Docker Compose for multi-container applications or Kubernetes for larger-scale deployments.</li>
-    </ul>
-
-    <div class="note">
-      You’ve successfully set up an automated Docker deployment pipeline using GitHub Actions, Docker Hub, SSH, Oracle Cloud’s free server, and Watchtower!
     </div>
 
-    <a href="https://hub.docker.com/" class="btn-primary">Get Started with Docker Hub</a>
-    <a href="https://www.oracle.com/cloud/free/" class="btn-primary" style="background-color: #f39c12;">Sign Up for Oracle Cloud Free Tier</a>
+    <div class="section">
+      <h2>Step 4: Automate Deployment Using GitHub Actions</h2>
+      <p>Integrate GitHub Actions with Docker Hub and deploy automatically via SSH. Here’s the GitHub Actions workflow for automatic Docker deployment:</p>
+      <pre><code>name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/my-app:latest .
+
+      - name: Push to Docker Hub
+        run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/my-app:latest
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH to Server
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/my-app:latest
+            docker stop my-app || true
+            docker rm my-app || true
+            docker run -d --name my-app -p 80:8080 ${{ secrets.DOCKER_HUB_USERNAME }}/my-app:latest</code></pre>
+    </div>
+
+    <div class="section">
+      <h2>Conclusion</h2>
+      <p>You’ve successfully set up an automated Docker deployment pipeline using GitHub Actions, Docker Hub, and an Oracle Cloud Free server.</p>
+    </div>
+
+    <a href="https://www.oracle.com/cloud/free/" class="btn-primary">Sign Up for Oracle Cloud Free Tier</a>
   </div>
 </body>
 </html>
