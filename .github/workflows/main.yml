@@ -58,6 +58,6 @@ jobs:
           key: ${{ secrets.ORACLE_SSH_PRIVATE_KEY }}
           script: |
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/webserver:latest
-            sudo docker stop my-app || true
-            sudo docker rm my-app || true
-            sudo docker run -d --name webserver -p 80:8080 ${{ secrets.DOCKER_USERNAME }}/webserver:latest
+            sudo docker stop webserver || true
+            sudo docker rm webserver || true
+            sudo docker run -d --name webserver -p 80:80 ${{ secrets.DOCKER_USERNAME }}/webserver:latest
